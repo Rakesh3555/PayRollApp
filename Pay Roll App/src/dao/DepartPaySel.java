@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import model.PayPojo;
@@ -10,10 +11,10 @@ public class DepartPaySel {
 	DevDep dd = new DevDep();
 	SupDep sd = new SupDep();
 	
-	public void department(PayPojo p){
-		
+	public void department(PayPojo p) throws ClassNotFoundException, SQLException{
+		System.out.println("-----Employee PaySlip Generator-----");
 		System.out.println("Choose your Department :");
-		System.out.println("1.Developer \n 2.Testing \n 3.Support ");
+		System.out.println("1.Developer \n2.Testing \n3.Support ");
 		char dc = dps.next().charAt(0);
 		switch(dc) {
 		case '1':
@@ -23,12 +24,12 @@ public class DepartPaySel {
 		case '2':
 			//System.out.println("----");
 			p.setDepartment("testing");
-			pra.tesDepPay();
+			pra.TestDepPay(p);
 			
 			break;
 		case '3':
 			p.setDepartment("support");
-			sd.supDepPay();
+			sd.SupDepPay(p);
 			break;
 		}
 		

@@ -1,29 +1,32 @@
 package dao;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import model.PayPojo;
+import util.payRollDb;
 
 public class DevDep {
 Scanner pps = new Scanner(System.in);
 	
-	public void devDepPay(PayPojo p){
-		String VallogInUser = "[a-zA-Z]{4,16}";
+	public void devDepPay(PayPojo p) throws ClassNotFoundException, SQLException{
 		System.out.println("Enter Username : ");
 		String userName = pps.next();
+		p.setUserName(userName);
 		System.out.println("Enter Password :");
 		String passWord = pps.next();
-
-		
-	while(PayRollMethods.read(userName, passWord)) {
+		p.setPassword(passWord);
 	
-		if(PayRollMethods.read(userName, passWord)) {
+//		
+while(payRollDb.readLogin(p)) {
+	
+		if(payRollDb.readLogin(p)) {
 
 			System.out.println("Our Services \n 1. Payroll Calci \n 2. NetPay Calci ");
 			char pa = pps.next().charAt(0);
 			switch(pa) {
 			case'1':
-				int payHour = 50000;
+				int payHour = 5000;
 				/*
 				 * while(true) { System.out.println("Enter Pay/Day :"); payHour = pps.nextInt();
 				 * if(payHour >= 0 ) {
@@ -140,16 +143,12 @@ Scanner pps = new Scanner(System.in);
 		}
 		else {
 			System.out.println("Invalid user");
+			devDepPay(p);
 			
 		}
 	
 		
 	}
-	
-		while(!PayRollMethods.read(userName, passWord))
-		{
-			devDepPay(p);
-		}
 	
 }
 	    	public void grossPayOutN(PayPojo p) {
@@ -159,13 +158,18 @@ Scanner pps = new Scanner(System.in);
 	    	}
 	    	
 	    	public void netPayOut(PayPojo p) {
+	    		
 	    		double netPay = p.getGrossPayCalci()-p.getDedection();
 	    		p.setNetPayCalci(netPay);
+	    		ViewPay vp = new ViewPay();
+		  
 
 	    		System.out.println("Provident Fund(PF) :"+p.getpF());
 	    		System.out.println("Insurance amount :"+p.getInsurance());
 	    		System.out.println("Allowance :"+p.getAllowance());
 	    		System.out.println("------------------");
 	    		System.out.println("Total dedection :"+p.getDedection());
+	    		vp.yourPaySlip(p);
 	    	}
+	    	
 }
