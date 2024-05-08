@@ -8,7 +8,7 @@ import model.PayPojo;
 public class DepartPaySel {
 	Scanner dps = new Scanner(System.in);
 	TesDepPay pra = new TesDepPay();
-	DevDep dd = new DevDep();
+	
 	SupDep sd = new SupDep();
 	
 	public void department(PayPojo p) throws ClassNotFoundException, SQLException{
@@ -19,7 +19,7 @@ public class DepartPaySel {
 		switch(dc) {
 		case '1':
 			p.setDepartment("developer");
-			dd.devDepPay(p);
+			DevDep.devDepPay(p);
 			break;
 		case '2':
 			//System.out.println("----");

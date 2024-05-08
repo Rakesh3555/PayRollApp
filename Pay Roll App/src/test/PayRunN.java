@@ -3,10 +3,7 @@ package test;
 import java.sql.SQLException;
 
 import dao.DepartPaySel;
-import dao.DevDep;
-import dao.ViewPay;
 import model.PayPojo;
-import util.payRollDb;
 
 public class PayRunN {
 

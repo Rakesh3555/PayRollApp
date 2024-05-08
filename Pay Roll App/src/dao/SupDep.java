@@ -7,16 +7,34 @@ import model.PayPojo;
 import util.payRollDb;
 
 public class SupDep {
-Scanner pps = new Scanner(System.in);
+static Scanner pps = new Scanner(System.in);
 	
-	public void SupDepPay(PayPojo p) throws ClassNotFoundException, SQLException{
+	public static void SupDepPay(PayPojo p) throws ClassNotFoundException, SQLException{
 		System.out.println("Enter Username : ");
 		String userName = pps.next();
 		p.setUserName(userName);
 		System.out.println("Enter Password :");
 		String passWord = pps.next();
 		p.setPassword(passWord);
-//		
+		try {
+			Validate.validUser(p);
+		}
+		catch(logUserValExp e)
+		{
+			while(!payRollDb.readLogin(p))
+			{
+				System.out.println(e);
+				System.out.println("Enter Username : ");
+				userName = pps.next();
+				p.setUserName(userName);
+				System.out.println("Enter Password :");
+				passWord = pps.next();
+				p.setPassword(passWord);
+			}
+			SupDep.SupCalci(p);
+		}
+	}
+	public static void SupCalci(PayPojo p) throws ClassNotFoundException, SQLException {
 while(payRollDb.readLogin(p)) {
 	
 		if(payRollDb.readLogin(p)) {
@@ -150,13 +168,13 @@ while(payRollDb.readLogin(p)) {
 	}
 	
 }
-	    	public void grossPayOutN(PayPojo p) {
+	    	public static void grossPayOutN(PayPojo p) {
 	    		float GrossPay = p.getPayHour() * p.getTotalHrWorked() + p.getOverTime() * p.getTotalOrTime();
 	    		System.out.println("Your GrossPay : "+GrossPay);
 	    		p.setGrossPayCalci(GrossPay);
 	    	}
 	    	
-	    	public void netPayOut(PayPojo p) {
+	    	public static void netPayOut(PayPojo p) {
 	    		
 	    		double netPay = p.getGrossPayCalci()-p.getDedection();
 	    		p.setNetPayCalci(netPay);
